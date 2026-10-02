@@ -20,7 +20,7 @@ BookBridge là một nền tảng học liệu mở và thông minh, giúp kết
 
 </div>
 
-## 🪙 Live demo ở đây: [Bookbridge](https://bookbridge-liart.vercel.app/exercise.html)
+## 🪙 Live demo ở đây: [Bookbridge](https://bookbridge-liart.vercel.app/index.html)
 
 ## ⚡️ Tổng quan (Overview)
 
