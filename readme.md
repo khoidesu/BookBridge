@@ -14,7 +14,6 @@ BookBridge là một nền tảng học liệu mở và thông minh, giúp kết
 
 [![Python 3.11](https://shields.io/badge/python-3.11+-blue)](https://shields.io/badge/python-3.11+-blue)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=FastAPI&labelColor=555&logoColor=white)](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=FastAPI&labelColor=555&logoColor=white)
-[![embeddings](https://img.shields.io/badge/embeddings-sentence--transformers-FF6F00?logo=huggingface)](https://img.shields.io/badge/embeddings-sentence--transformers-FF6F00?logo=huggingface)
 [![pandas](https://img.shields.io/badge/-Pandas-333333?style=flat&logo=pandas)](https://img.shields.io/badge/-Pandas-333333?style=flat&logo=pandas)
 [![Gemini-Flash](https://img.shields.io/badge/Gemini-Flash-8E75B2?logo=googlegemini&logoColor=white)](https://img.shields.io/badge/Gemini-Flash-8E75B2?logo=googlegemini&logoColor=white)
 [![MongoDB](https://img.shields.io/badge/-MongoDB-13aa52?style=flat-square&logo=mongodb&logoColor=white)](https://img.shields.io/badge/-MongoDB-13aa52?style=flat-square&logo=mongodb&logoColor=white)
