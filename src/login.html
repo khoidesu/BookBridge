@@ -20,7 +20,7 @@
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
   <!-- Minimal Header -->
   <header class="w-full h-20 px-space-lg flex items-center justify-between border-b border-surface-container-high bg-surface">
-    <a href="home_page.html" class="flex items-center gap-space-sm sm:gap-space-md">
+    <a href="index.html" class="flex items-center gap-space-sm sm:gap-space-md">
       <img alt="BookBridge Logo" class="h-7 sm:h-8 w-auto object-contain" src="img/icon.png">
       <div class="flex flex-col">
         <span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface leading-none text-base sm:text-xl">BookBridge</span>
@@ -85,7 +85,7 @@
           localStorage.setItem('bb_token', data.token);
           localStorage.setItem('bb_role', data.role);
           localStorage.setItem('bb_username', data.username);
-          window.location.href = 'home_page.html';
+          window.location.href = 'index.html';
         } else {
           errorMsg.textContent = data.detail || 'Sai thông tin đăng nhập';
           errorMsg.classList.remove('hidden');

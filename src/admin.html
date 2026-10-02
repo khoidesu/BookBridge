@@ -15,7 +15,7 @@
 </head>
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
   <header class="w-full h-20 px-space-lg flex items-center justify-between border-b border-surface-container-high bg-surface">
-    <a href="home_page.html" class="flex items-center gap-space-sm sm:gap-space-md">
+    <a href="index.html" class="flex items-center gap-space-sm sm:gap-space-md">
       <img alt="BookBridge Logo" class="h-7 sm:h-8 w-auto object-contain" src="img/icon.png">
       <div class="flex flex-col">
         <span class="font-headline-sm text-headline-sm uppercase tracking-tight text-error leading-none text-base sm:text-xl font-bold">Admin Panel</span>
@@ -87,7 +87,7 @@
   <script>
     const token = localStorage.getItem('bb_token');
     if (!token || localStorage.getItem('bb_role') !== 'admin') {
-      window.location.href = 'home_page.html';
+      window.location.href = 'index.html';
     }
 
     const headers = {
