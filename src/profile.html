@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Hồ Sơ Cá Nhân | BOOKBRIDGE</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@100..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet">
+    
+  <!-- Chart.js for graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" type="image/png" href="img/icon.png">
+</head>
+
+<body class="home-page min-h-screen relative antialiased bg-[#F9F9FA]">
+  <div class="min-h-screen flex flex-col justify-between">
+    <!-- BEGIN STANDARD NAVBAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container-high">
+      <div class="h-20 w-full px-space-lg flex items-center justify-between">
+        <div class="flex items-center gap-space-md">
+          <button id="mobile-menu-btn" class="xl:hidden text-on-surface p-1 hover:bg-surface-container rounded transition-colors" title="Mở menu">
+            <span class="material-symbols-outlined text-[24px]">menu</span>
+          </button>
+          <a href="home_page.html" class="flex items-center gap-space-sm sm:gap-space-md">
+            <div class="flex flex-col">
+              <span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface leading-none text-base sm:text-xl">BookBridge</span>
+              <span class="font-label-code text-label-code text-tertiary tracking-wider uppercase mt-0 sm:mt-space-xs text-[9px] sm:text-[11px]">Hồ sơ cá nhân</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden xl:flex items-center gap-space-lg">
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="home_page.html">Trang chủ</a>
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="library.html">Thư viện</a>
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="pairing.html">Ghép đôi</a>
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="exercise.html">Bài tập</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-space-md" id="auth-container">
+          <a class="hidden sm:inline-flex items-center justify-center px-space-md py-space-sm border border-surface-container-high bg-surface-container-low text-on-surface font-headline-sm text-body-sm rounded-lg hover:bg-surface-container transition-colors" href="login.html">Đăng nhập</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-[51] hidden backdrop-blur-sm transition-opacity opacity-0"></div>
+    <div id="mobile-sidebar" class="fixed top-0 left-0 bottom-0 w-64 sm:w-72 bg-surface z-[52] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-r border-surface-container-high">
+      <div class="h-20 flex items-center justify-between px-space-lg border-b border-surface-container-high">
+        <span class="font-headline-sm text-on-surface font-bold uppercase tracking-widest text-body-md">Menu</span>
+        <button id="close-sidebar-btn" class="text-on-surface p-1 hover:bg-surface-container rounded transition-colors"><span class="material-symbols-outlined text-[24px]">close</span></button>
+      </div>
+      <nav class="flex flex-col py-space-md px-space-md gap-2 overflow-y-auto">
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md" href="home_page.html">Trang chủ</a>
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md" href="library.html">Thư viện</a>
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md" href="pairing.html">Ghép đôi</a>
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md" href="exercise.html">Bài tập</a>
+      </nav>
+    </div>
+    <!-- END STANDARD NAVBAR -->
+
+    <main class="w-full flex-grow pt-28 pb-16">
+      <div class="max-w-5xl mx-auto px-6 sm:px-8">
+        
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900" data-reveal>Quản lý hồ sơ</h1>
+            <p class="text-gray-500 mt-1" id="profile-role-text">Đang tải dữ liệu...</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- LEFT COLUMN: Profile Info & Password -->
+          <div class="lg:col-span-1 space-y-6">
+            
+            <!-- Avatar & Basic Info -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center" data-reveal>
+              <div class="relative w-32 h-32 mb-4 group">
+                <img id="avatar-preview" src="https://ui-avatars.com/api/?name=User&background=random" class="w-full h-full rounded-full object-cover border-4 border-gray-50 shadow-sm" alt="Avatar">
+                <label for="avatar-upload" class="absolute inset-0 bg-black/50 text-white rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                  <span class="material-symbols-outlined text-2xl">photo_camera</span>
+                  <span class="text-[10px] font-bold mt-1">Tải ảnh lên</span>
+                </label>
+                <input type="file" id="avatar-upload" accept="image/png, image/jpeg, image/webp" class="hidden">
+              </div>
+              <div class="text-xs text-gray-400 text-center mb-4">Ảnh < 2MB (JPG, PNG)</div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100" data-reveal>
+              <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2" data-reveal><span class="material-symbols-outlined text-primary text-xl">lock</span> Đổi mật khẩu</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Mật khẩu cũ</label>
+                  <input type="password" id="old-password" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Mật khẩu mới</label>
+                  <input type="password" id="new-password" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+                </div>
+                <button id="btn-change-password" class="w-full py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-lg text-sm transition-colors mt-2">
+                  Xác nhận đổi
+                </button>
+              </div>
+            </div>
+            
+          </div>
+
+          <!-- RIGHT COLUMN: Edit Form & Results -->
+          <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Info Form -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100" data-reveal>
+              <h3 class="font-bold text-gray-900 mb-6 flex items-center gap-2 text-lg" data-reveal><span class="material-symbols-outlined text-primary">person</span> Thông tin cá nhân</h3>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Họ và tên</label>
+                  <input type="text" id="prof-fullname" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Nguyễn Văn A">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Ngày tháng năm sinh</label>
+                  <input type="date" id="prof-dob" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Trường</label>
+                  <input type="text" id="prof-school" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="THPT Chuyên Hà Nội">
+                </div>
+                <div id="class-container" class="hidden">
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Lớp</label>
+                  <input type="text" id="prof-class" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="10A1">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Địa chỉ (Không bắt buộc)</label>
+                  <input type="text" id="prof-address" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Quận/Huyện, Tỉnh/Thành phố">
+                </div>
+              </div>
+              
+              <div class="flex justify-end">
+                <button id="btn-save-profile" class="px-6 py-2.5 bg-primary-container text-on-primary font-bold rounded-lg hover:bg-surface-tint shadow-[2px_2px_0px_#1a1c1d] transition-all flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[20px]">save</span> Lưu thay đổi
+                </button>
+              </div>
+            </div>
+
+            <!-- Student Results Section -->
+            <div id="student-results-section" class="hidden bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100" data-reveal>
+              <h3 class="font-bold text-gray-900 mb-6 flex items-center gap-2 text-lg" data-reveal><span class="material-symbols-outlined text-primary">analytics</span> Kết quả học tập</h3>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Chart -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 flex flex-col items-center">
+                  <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Top 5 Điểm Cao Nhất</div>
+                  <canvas id="scoresChart" width="400" height="300" class="w-full h-auto"></canvas>
+                </div>
+                
+                <!-- History -->
+                <div class="flex flex-col">
+                  <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Lịch sử làm bài</div>
+                  <div id="exercise-history-list" class="flex flex-col gap-3 overflow-y-auto max-h-[300px] pr-2 custom-scrollbar">
+                    <!-- Loaded dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('bb_token');
+      const role = localStorage.getItem('bb_role');
+      const username = localStorage.getItem('bb_username');
+
+      if (!token) {
+        alert('Vui lòng đăng nhập để xem hồ sơ!');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('profile-role-text').textContent = `Tài khoản: ${username} | Vai trò: ${role === 'teacher' ? 'Giáo viên' : 'Học sinh'}`;
+      
+      const isStudent = role !== 'teacher' && role !== 'admin';
+      
+      if (isStudent) {
+        document.getElementById('class-container').classList.remove('hidden');
+        document.getElementById('student-results-section').classList.remove('hidden');
+      }
+
+      let avatarBase64 = null;
+
+      // 1. Fetch Profile Info
+      try {
+        const res = await fetch('http://127.0.0.1:8000/user/profile', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const profile = await res.json();
+          if (profile.fullname) document.getElementById('prof-fullname').value = profile.fullname;
+          if (profile.dob) document.getElementById('prof-dob').value = profile.dob;
+          if (profile.school) document.getElementById('prof-school').value = profile.school;
+          if (profile.class_name) document.getElementById('prof-class').value = profile.class_name;
+          if (profile.address) document.getElementById('prof-address').value = profile.address;
+          if (profile.avatar) {
+            avatarBase64 = profile.avatar;
+            document.getElementById('avatar-preview').src = profile.avatar;
+          } else {
+             document.getElementById('avatar-preview').src = `https://ui-avatars.com/api/?name=${username}&background=random`;
+          }
+        }
+      } catch (err) { console.error('Error fetching profile', err); }
+
+      // 2. Avatar Upload Handler
+      const avatarUpload = document.getElementById('avatar-upload');
+      avatarUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // Check size < 2MB
+        if (file.size > 2 * 1024 * 1024) {
+          alert('Vui lòng chọn ảnh nhỏ hơn 2MB để tối ưu dung lượng!');
+          avatarUpload.value = '';
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          avatarBase64 = event.target.result;
+          document.getElementById('avatar-preview').src = avatarBase64;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 3. Save Profile
+      document.getElementById('btn-save-profile').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-save-profile');
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">refresh</span> Đang lưu...';
+        btn.disabled = true;
+
+        const profileData = {
+          fullname: document.getElementById('prof-fullname').value,
+          dob: document.getElementById('prof-dob').value,
+          school: document.getElementById('prof-school').value,
+          address: document.getElementById('prof-address').value,
+        };
+        if (isStudent) {
+          profileData.class_name = document.getElementById('prof-class').value;
+        }
+        if (avatarBase64) {
+          profileData.avatar = avatarBase64;
+        }
+
+        try {
+          const res = await fetch('http://127.0.0.1:8000/user/profile', {
+            method: 'PUT',
+            headers: { 
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(profileData)
+          });
+          
+          if (res.ok) {
+            alert('Lưu hồ sơ thành công!');
+          } else {
+            alert('Lỗi khi lưu hồ sơ.');
+          }
+        } catch (err) {
+          alert('Lỗi mạng!');
+        } finally {
+          btn.innerHTML = origText;
+          btn.disabled = false;
+        }
+      });
+
+      // 4. Change Password
+      document.getElementById('btn-change-password').addEventListener('click', async () => {
+        const oldPass = document.getElementById('old-password').value;
+        const newPass = document.getElementById('new-password').value;
+        if (!oldPass || !newPass) {
+          alert('Vui lòng điền đủ mật khẩu cũ và mới.');
+          return;
+        }
+
+        try {
+          const res = await fetch('http://127.0.0.1:8000/user/password', {
+            method: 'PUT',
+            headers: { 
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ old_password: oldPass, new_password: newPass })
+          });
+          
+          const data = await res.json();
+          if (res.ok) {
+            alert('Đổi mật khẩu thành công!');
+            document.getElementById('old-password').value = '';
+            document.getElementById('new-password').value = '';
+          } else {
+            alert('Lỗi: ' + data.detail);
+          }
+        } catch (err) {
+          alert('Lỗi mạng!');
+        }
+      });
+
+      // 5. Fetch and Render Student Exercises
+      if (isStudent) {
+        try {
+          const res = await fetch('http://127.0.0.1:8000/user/exercises', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            
+            // Render History List
+            const historyContainer = document.getElementById('exercise-history-list');
+            historyContainer.innerHTML = '';
+            
+            if (data.history.length === 0) {
+              historyContainer.innerHTML = '<div class="text-sm text-gray-500 py-4 text-center">Bạn chưa có lịch sử làm bài tập nào.</div>';
+            } else {
+              data.history.forEach(item => {
+                const color = item.score >= 8.0 ? 'text-green-600 bg-green-50' : (item.score >= 5.0 ? 'text-amber-600 bg-amber-50' : 'text-red-600 bg-red-50');
+                historyContainer.innerHTML += `
+                  <div class="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                      <div class="font-bold text-sm text-gray-900">${item.title}</div>
+                      <div class="text-[10px] text-gray-400 mt-0.5"><span class="material-symbols-outlined text-[12px] align-middle">calendar_today</span> ${item.date} • <span class="material-symbols-outlined text-[12px] align-middle">timer</span> ${item.time}</div>
+                    </div>
+                    <div class="px-2.5 py-1 ${color} rounded-md font-bold font-mono text-sm border border-transparent flex-shrink-0">
+                      ${item.score.toFixed(1)}
+                    </div>
+                  </div>
+                `;
+              });
+            }
+
+            // Render Chart
+            const ctx = document.getElementById('scoresChart').getContext('2d');
+            const sortedScores = data.scores.sort((a, b) => b.score - a.score).slice(0, 5); // top 5
+            
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: sortedScores.map(s => s.subject.substring(0, 15) + (s.subject.length > 15 ? '...' : '')),
+                datasets: [{
+                  label: 'Điểm số',
+                  data: sortedScores.map(s => s.score),
+                  backgroundColor: 'rgba(255, 92, 0, 0.8)',
+                  borderColor: 'rgba(255, 92, 0, 1)',
+                  borderWidth: 1,
+                  borderRadius: 4
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: 10
+                  }
+                },
+                plugins: {
+                  legend: { display: false }
+                }
+              }
+            });
+          }
+        } catch (err) { console.error('Error fetching exercises', err); }
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/animation.js"></script>
+</body>
+</html>

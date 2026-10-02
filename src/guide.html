@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Hướng Dẫn Sử Dụng | BOOKBRIDGE</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Config -->
+  <script src="js/tailwind-config.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@100..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="img/icon.png">
+</head>
+
+<body class="home-page min-h-screen relative antialiased selection:bg-[#FF5C00] selection:text-white bg-[#F9F9FA]">
+  <div class="min-h-screen flex flex-col justify-between">
+    <!-- BEGIN STANDARD NAVBAR -->
+    <header
+      class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container-high">
+      <div class="h-20 w-full px-space-lg flex items-center justify-between">
+        <div class="flex items-center gap-space-md">
+          <!-- Mobile menu button -->
+          <button id="mobile-menu-btn"
+            class="xl:hidden text-on-surface p-1 hover:bg-surface-container rounded transition-colors" title="Mở menu">
+            <span class="material-symbols-outlined text-[24px]">menu</span>
+          </button>
+          <!-- Logo -->
+          <a href="home_page.html" class="flex items-center gap-space-sm sm:gap-space-md">
+            <img alt="BookBridge Logo" class="h-7 sm:h-8 w-auto object-contain" src="img/icon.png">
+            <div class="flex flex-col">
+              <span
+                class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface leading-none text-base sm:text-xl">BookBridge</span>
+              <span
+                class="font-label-code text-label-code text-tertiary tracking-wider uppercase mt-0 sm:mt-space-xs text-[9px] sm:text-[11px]">Hướng
+                dẫn</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden xl:flex items-center gap-space-lg">
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+            href="home_page.html">Trang chủ</a>
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+            href="library.html">Thư viện</a>
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+            href="pairing.html">Ghép đôi</a>
+          <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+            href="exercise.html">Bài tập</a>
+          <a class="transition-colors text-primary-container font-headline-sm text-body-md" href="guide.html">Hướng
+            dẫn</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-space-md" id="auth-container">
+          <a class="hidden sm:inline-flex items-center justify-center px-space-md py-space-sm border border-surface-container-high bg-surface-container-low text-on-surface font-headline-sm text-body-sm rounded-lg hover:bg-surface-container transition-colors"
+            href="login.html">Đăng nhập</a>
+          <a class="hidden sm:inline-flex items-center justify-center px-space-md py-space-sm bg-primary-container text-on-primary font-headline-sm text-body-sm rounded-lg hover:bg-surface-tint active:translate-x-0.5 active:translate-y-0.5 transition-all shadow-[2px_2px_0px_#1a1c1d]"
+            href="register.html">Đăng ký</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div id="mobile-sidebar-overlay"
+      class="fixed inset-0 bg-black/50 z-[51] hidden backdrop-blur-sm transition-opacity opacity-0"></div>
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar"
+      class="fixed top-0 left-0 bottom-0 w-64 sm:w-72 bg-surface z-[52] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-r border-surface-container-high">
+      <div class="h-20 flex items-center justify-between px-space-lg border-b border-surface-container-high">
+        <span class="font-headline-sm text-on-surface font-bold uppercase tracking-widest text-body-md">Menu</span>
+        <button id="close-sidebar-btn" class="text-on-surface p-1 hover:bg-surface-container rounded transition-colors"
+          title="Đóng menu">
+          <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
+      </div>
+      <nav class="flex flex-col py-space-md px-space-md gap-2 overflow-y-auto">
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+          href="home_page.html">Trang chủ</a>
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+          href="library.html">Thư viện</a>
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+          href="pairing.html">Ghép đôi</a>
+        <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+          href="exercise.html">Bài tập</a>
+        <a class="px-space-md py-space-sm rounded-lg bg-primary-container/10 text-primary-container font-headline-sm text-body-md font-bold"
+          href="guide.html">Hướng dẫn</a>
+      </nav>
+      <div class="mt-auto p-space-md border-t border-surface-container-high">
+        <a class="flex items-center justify-center w-full px-space-md py-space-sm bg-primary-container text-on-primary font-headline-sm text-body-sm rounded-lg hover:bg-surface-tint shadow-[2px_2px_0px_#1a1c1d]"
+          href="exercise.html">Bắt đầu sử dụng</a>
+      </div>
+    </div>
+    <!-- END STANDARD NAVBAR -->
+
+    <!-- Main Content -->
+    <main class="w-full flex-grow pt-28 pb-16">
+      <div class="max-w-5xl mx-auto px-6 sm:px-8">
+
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-900 mb-4" data-reveal>Hướng dẫn sử dụng BookBridge</h1>
+          <p class="text-lg text-gray-500 max-w-2xl mx-auto">Nền tảng kết nối sách học đường mở giúp giải quyết vấn đề
+            thiếu SGK và cung cấp kho tài liệu điện tử thông minh cho mọi học sinh.</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-12">
+          <!-- Guide 1: Thư viện -->
+          <div
+            class="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col md:flex-row gap-8 items-center"
+            data-reveal>
+            <div class="flex-1 space-y-4">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-bold text-xs uppercase tracking-wider"
+                data-reveal>
+                <span class="material-symbols-outlined text-[16px]">menu_book</span> Tính năng 1
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900" data-reveal>Khám phá & Đọc sách (Thư viện)</h2>
+              <p class="text-gray-600 leading-relaxed">Kho học liệu điện tử cung cấp hàng trăm đầu sách giáo khoa và
+                sách bài tập chuẩn theo chương trình phổ thông của Bộ GD&ĐT.</p>
+              <ul class="space-y-3 text-gray-600 text-sm mt-4">
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    1:</strong> Truy cập vào mục <a href="library.html" class="text-[#FF5C00] font-bold underline">Thư
+                    viện</a> trên thanh điều hướng.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    2:</strong> Duyệt qua danh sách các cuốn SGK và chọn sách bạn muốn. Bạn có thể xem ảnh bìa, năm xuất
+                  bản và môn học.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    3:</strong> Nhấn "Đọc Trực Tuyến" để xem bản điện tử chất lượng cao của cuốn sách hoặc tải về máy.
+                </li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Công cụ AI
+                    Lens:</strong> Bạn có thể kiểm tra nội dung khác biệt giữa các đầu sách (VD: sách cũ và sách mới)
+                  bằng AI Lens ngay trong thư viện.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Guide 2: Ghép đôi -->
+          <div
+            class="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col md:flex-row-reverse gap-8 items-center"
+            data-reveal>
+            <div class="flex-1 space-y-4">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full font-bold text-xs uppercase tracking-wider"
+                data-reveal>
+                <span class="material-symbols-outlined text-[16px]">handshake</span> Tính năng 2
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900" data-reveal>Ghép đôi & Trao đổi sách trực tiếp</h2>
+              <p class="text-gray-600 leading-relaxed">Chia sẻ sách theo hình thức ca học (sáng/chiều) giữa các học
+                sinh, tối ưu hóa việc sử dụng chung một bộ sách giáo khoa và giải quyết nạn thiếu sách.</p>
+              <ul class="space-y-3 text-gray-600 text-sm mt-4">
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    1:</strong> Đăng nhập và vào mục <a href="pairing.html"
+                    class="text-[#FF5C00] font-bold underline">Ghép đôi</a>.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    2:</strong> Nếu bạn cần mượn sách hoặc có sách muốn cho mượn, điền các thông tin: Vai trò (Cần
+                  mượn/Cho mượn), Ca học, Loại sách và Khối/Lớp.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    3:</strong> Bấm "Tạo Yêu Cầu". Lưới radar của hệ thống sẽ cập nhật trạng thái yêu cầu của bạn.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    4:</strong> Xem bảng yêu cầu ghép cặp ở dưới, nếu có học sinh nào phù hợp, nhấn "Đề nghị ghép cặp".
+                  Họ sẽ nhận được thông báo để hai bên trao đổi trực tiếp!</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Guide 3: Bài tập (Studio AI) -->
+          <div
+            class="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col md:flex-row gap-8 items-center"
+            data-reveal>
+            <div class="flex-1 space-y-4">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-bold text-xs uppercase tracking-wider"
+                data-reveal>
+                <span class="material-symbols-outlined text-[16px]">psychology</span> Tính năng 3
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900" data-reveal>Studio AI: Phiếu bài tập & Slide</h2>
+              <p class="text-gray-600 leading-relaxed">Công cụ dành cho Giáo viên để khởi tạo bài tập tự động bằng AI,
+                và dành cho Học sinh để tham gia giải bài tập trực tuyến.</p>
+              <ul class="space-y-3 text-gray-600 text-sm mt-4">
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Bước
+                    1:</strong> Vào mục <a href="exercise.html" class="text-[#FF5C00] font-bold underline">Bài tập</a>.
+                </li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Đối với
+                    Giáo viên:</strong> Dùng bảng tạo bài tập thông minh (Studio AI) để đính kèm file PDF/TXT tài liệu
+                  bài giảng. Chọn format đầu ra (Lý thuyết tóm tắt, Bài kiểm tra trắc nghiệm, hoặc Slide bài giảng). AI
+                  sẽ tự động phân tích và tạo bài.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Đối với Học
+                    sinh:</strong> Chọn các bài tập có sẵn trên thư viện học liệu để làm trực tuyến. Kết quả làm bài và
+                  điểm số sẽ được chấm ngay lập tức và lưu thẳng vào <a href="profile.html"
+                    class="text-[#FF5C00] font-bold underline">Hồ sơ cá nhân</a>.</li>
+                <li class="flex items-start gap-2"><span
+                    class="material-symbols-outlined text-[#FF5C00] text-[20px]">check_circle</span> <strong>Trợ lý
+                    Sylvi:</strong> Ở bất kì trang nào, bạn đều có thể bấm vào icon Chatbot ở góc phải bên dưới để nhờ
+                  Trợ lý ảo giải thích các khúc mắc về chương trình học.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- BEGIN: TechFooter -->
+    <footer class="bg-white border-t border-gray-200/80 px-6 sm:px-8 py-8 text-xs text-gray-500" data-reveal>
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center space-x-3"><span class="font-bold text-gray-900 font-sans">BOOKBRIDGE PROTOCOL ©
+            2025</span><span class="text-gray-300">•</span><span class="">Chương trình hỗ trợ học sinh thiếu sách giáo
+            khoa toàn quốc</span></div>
+        <div class="flex items-center space-x-6 text-gray-600 font-medium"><a
+            class="hover:text-[#FF5C00] transition-colors" href="home_page.html">Điều khoản phục vụ</a><a
+            class="hover:text-[#FF5C00] transition-colors" href="guide.html">Hướng dẫn nhà trường</a><a
+            class="hover:text-[#FF5C00] transition-colors" href="home_page.html">Đóng góp kho sách</a></div>
+      </div>
+    </footer>
+    <!-- END: TechFooter -->
+  </div>
+
+  <div id="sylvi-chatbot" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <!-- Chat Window -->
+    <div id="sylvi-window"
+      class="hidden w-[380px] bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200 mb-4 flex-col overflow-hidden transition-all duration-300 transform origin-bottom-right font-sans">
+
+      <!-- Header -->
+      <div class="p-4 pb-2 flex items-start justify-between">
+        <div class="flex items-start gap-3">
+          <div class="relative">
+            <div
+              class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-white shadow-sm overflow-hidden">
+              <div
+                class="w-8 h-8 bg-gradient-to-br from-amber-400 to-[#FF5C00] rounded-md flex items-center justify-center shadow-inner">
+                <div class="flex gap-1">
+                  <div class="w-1.5 h-1.5 bg-white rounded-sm"></div>
+                  <div class="w-1.5 h-1.5 bg-white rounded-sm"></div>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[#FF5C00] border-2 border-white rounded-full"></div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-bold text-gray-900 text-base" data-reveal>Sylvi AI</h3>
+              <span
+                class="bg-[#FFE5D9] text-[#D9381E] text-[10px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">Trợ
+                lý SGK</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-0.5">Trực tuyến giải đáp về phiên bản sách</p>
+          </div>
+        </div>
+        <button id="sylvi-close-btn" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Chat Messages -->
+      <div id="sylvi-messages"
+        class="flex-1 p-4 max-h-[300px] min-h-[200px] overflow-y-auto flex flex-col gap-3 text-sm custom-scrollbar">
+        <div class="self-start bg-[#F4F4F5] p-3 rounded-lg text-gray-800 shadow-sm w-full leading-relaxed">
+          "Xin chào! Mình là Sylvi, mình có thể giúp bạn xem cách mượn sách, đăng ký ca mượn, hay sử dụng AI để tóm tắt
+          lý thuyết. Cần hướng dẫn tính năng nào bạn cứ nhắn nhé!"
+        </div>
+      </div>
+
+      <!-- Input Form -->
+      <form id="sylvi-form" class="px-4 pb-2">
+        <div class="flex gap-2 border border-gray-300 bg-[#F4F4F5] rounded p-1">
+          <input type="text" id="sylvi-input"
+            class="flex-1 text-sm bg-transparent border-none px-2 py-1.5 focus:outline-none focus:ring-0 text-gray-700 placeholder:text-gray-500"
+            placeholder="Hỏi Sylvi..." autocomplete="off">
+          <button type="submit"
+            class="w-9 h-9 rounded bg-[#FF5C00] text-white flex items-center justify-center hover:bg-[#e04f00] transition-colors disabled:opacity-50">
+            <span class="material-symbols-outlined text-[16px]">send</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Toggle Button -->
+    <button id="sylvi-toggle-btn"
+      class="w-14 h-14 bg-[#FF5C00] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 transition-all focus:outline-none relative group">
+      <span class="material-symbols-outlined text-[28px] group-hover:hidden">smart_toy</span>
+      <span class="material-symbols-outlined text-[28px] hidden group-hover:block text-white">chat</span>
+    </button>
+  </div>
+
+  <script>
+    // Sylvi chatbot simple toggle (Wait for main.js to handle full AI logic)
+    const toggleBtn = document.getElementById('sylvi-toggle-btn');
+    const closeBtn = document.getElementById('sylvi-close-btn');
+    const win = document.getElementById('sylvi-window');
+
+    function toggleChat() {
+      if (win.classList.contains('hidden')) {
+        win.classList.remove('hidden'); win.classList.add('flex');
+      } else {
+        win.classList.add('hidden'); win.classList.remove('flex');
+      }
+    }
+    toggleBtn?.addEventListener('click', toggleChat);
+    closeBtn?.addEventListener('click', toggleChat);
+  </script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/animation.js"></script>
+</body>
+
+</html>

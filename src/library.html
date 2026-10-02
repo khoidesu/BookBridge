@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Config -->
+  <script src="js/tailwind-config.js"></script>
+  <!-- Google Fonts (Fixed Space Mono weights and included all required fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@100..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <meta content="web_standard" name="shell-type">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;family=Space+Mono:wght@100..900&amp;display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="img/icon.png">
+</head>
+
+<body class="bg-surface font-body-md text-on-surface antialiased">
+  <!-- BEGIN STANDARD NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container-high">
+    <div class="h-20 w-full px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-md">
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn"
+          class="xl:hidden text-on-surface p-1 hover:bg-surface-container rounded transition-colors" title="Mở menu">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <!-- Logo -->
+        <a href="home_page.html" class="flex items-center gap-space-sm sm:gap-space-md">
+          <img alt="BookBridge Logo" class="h-7 sm:h-8 w-auto object-contain" src="img/icon.png">
+          <div class="flex flex-col">
+            <span
+              class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface leading-none text-base sm:text-xl">BookBridge</span>
+            <span
+              class="font-label-code text-label-code text-tertiary tracking-wider uppercase mt-0 sm:mt-space-xs text-[9px] sm:text-[11px]">Open
+              Educational Matrix</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden xl:flex items-center gap-space-lg">
+        <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+          href="home_page.html">Trang chủ</a>
+        <a class="transition-colors text-primary-container font-headline-sm text-body-md" href="library.html">Thư
+          viện</a>
+        <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+          href="pairing.html">Ghép đôi</a>
+        <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+          href="exercise.html">Bài tập</a>
+        <a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+          href="guide.html">Hướng dẫn</a>
+      </nav>
+
+      <!-- Right Actions -->
+      <div class="flex items-center gap-space-md" id="auth-container">
+        <a class="hidden sm:inline-flex items-center justify-center px-space-md py-space-sm border border-surface-container-high bg-surface-container-low text-on-surface font-headline-sm text-body-sm rounded-lg hover:bg-surface-container transition-colors"
+          href="login.html">Đăng nhập</a>
+        <a class="hidden sm:inline-flex items-center justify-center px-space-md py-space-sm bg-primary-container text-on-primary font-headline-sm text-body-sm rounded-lg hover:bg-surface-tint active:translate-x-0.5 active:translate-y-0.5 transition-all shadow-[2px_2px_0px_#1a1c1d]"
+          href="register.html">Đăng ký</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div id="mobile-sidebar-overlay"
+    class="fixed inset-0 bg-black/50 z-[51] hidden backdrop-blur-sm transition-opacity opacity-0"></div>
+  <!-- Mobile Sidebar -->
+  <div id="mobile-sidebar"
+    class="fixed top-0 left-0 bottom-0 w-64 sm:w-72 bg-surface z-[52] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-r border-surface-container-high">
+    <div class="h-20 flex items-center justify-between px-space-lg border-b border-surface-container-high">
+      <span class="font-headline-sm text-on-surface font-bold uppercase tracking-widest text-body-md">Menu</span>
+      <button id="close-sidebar-btn" class="text-on-surface p-1 hover:bg-surface-container rounded transition-colors"
+        title="Đóng menu">
+        <span class="material-symbols-outlined text-[24px]">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col py-space-md px-space-md gap-2 overflow-y-auto">
+      <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+        href="home_page.html">Trang chủ</a>
+      <a class="px-space-md py-space-sm rounded-lg bg-primary-container/10 text-primary-container font-headline-sm text-body-md font-bold"
+        href="library.html">Thư viện</a>
+      <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+        href="pairing.html">Ghép đôi</a>
+      <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+        href="exercise.html">Bài tập</a>
+      <a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-headline-sm text-body-md"
+        href="guide.html">Hướng dẫn</a>
+    </nav>
+    <div class="mt-auto p-space-md border-t border-surface-container-high">
+      <a class="flex items-center justify-center w-full px-space-md py-space-sm bg-primary-container text-on-primary font-headline-sm text-body-sm rounded-lg hover:bg-surface-tint shadow-[2px_2px_0px_#1a1c1d]"
+        href="exercise.html">Bắt đầu sử dụng</a>
+    </div>
+  </div>
+  <!-- END STANDARD NAVBAR -->
+  <main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]">
+    <div class="flex flex-col w-full">
+      <!-- Top Matrix Indicator & Sub-header Breadcrumb Bar -->
+      <section class="w-full bg-surface-container-low px-space-lg py-space-sm" data-reveal>
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-space-sm">
+          <div class="flex items-center gap-space-xs font-label-code text-label-code text-tertiary">
+            <a class="hover:text-primary-container transition-colors" href="home_page.html">TRANG CHỦ</a>
+            <span class="">/</span>
+            <span class="text-on-surface font-headline-sm text-body-sm uppercase">TRA CỨU SGK &amp; HỌC LIỆU SỐ CHÍNH
+              THỨC</span>
+            <span class="ml-2 px-1.5 py-0.5 bg-primary-fixed text-on-primary-fixed rounded-sm text-label-code">CHUẨN
+              GDPT 2018</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Chatbot Terminal -->
+      <section class="w-full px-space-lg py-space-sm bg-surface flex-col mb-4" data-reveal>
+        <div
+          class="max-w-7xl mx-auto w-full flex flex-col bg-surface-container-lowest border border-surface-container-high rounded-xl shadow-sm relative transition-all duration-500 overflow-hidden"
+          id="main-chat-container">
+
+          <!-- Chat Header (Toggle Button) -->
+          <button id="toggle-main-chat-btn"
+            class="w-full px-space-md py-space-sm bg-surface-container-low border-b border-surface-container-high hover:bg-surface-container transition-colors flex items-center justify-between outline-none cursor-pointer">
+            <div class="flex items-center gap-space-sm">
+              <div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-on-primary text-[18px]">smart_toy</span>
+              </div>
+              <div class="text-left">
+                <h2 class="font-headline-sm text-body-md text-on-surface font-bold uppercase tracking-wide" data-reveal>
+                  Sylvi AI
+                </h2>
+                <p class="font-label-code text-label-code text-tertiary text-[10px]">Trợ lý định hướng học liệu</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-label-code text-[10px] text-emerald-600 uppercase font-bold hidden sm:inline">Trực
+                  tuyến</span>
+              </div>
+              <span class="material-symbols-outlined text-secondary transition-transform duration-300"
+                id="chat-toggle-icon">expand_more</span>
+            </div>
+          </button>
+
+          <!-- Chat Area (Collapsible) -->
+          <div id="main-chat-area" class="flex flex-col w-full h-0 overflow-hidden transition-all duration-500">
+            <div class="flex flex-col h-[600px] w-full">
+
+              <!-- Chat History -->
+              <div class="flex-1 overflow-y-auto p-space-md flex flex-col gap-space-md bg-surface-container-lowest"
+                id="chat-history">
+                <!-- Empty Chat History -->
+              </div>
+
+              <!-- Chat Input Area -->
+              <div class="p-space-md bg-surface-container-low border-t border-surface-container-high">
+                <div
+                  class="flex items-end gap-2 bg-surface rounded-xl border border-surface-container-high p-2 focus-within:border-primary-container focus-within:shadow-sm transition-all">
+                  <textarea id="sylvi-library-input"
+                    class="w-full bg-transparent border-none focus:ring-0 resize-none max-h-32 text-body-md py-2 placeholder:text-tertiary text-on-surface no-scrollbar outline-none"
+                    placeholder="Hỏi Sylvi AI về nội dung bài học, sách cũ..." rows="1"
+                    oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+                    onkeydown="if(event.key === 'Enter' && !event.shiftKey){ event.preventDefault(); document.getElementById('sylvi-library-submit').click(); }"></textarea>
+                  <button id="sylvi-library-submit"
+                    class="p-2 bg-primary-container text-on-primary rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex-shrink-0 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[20px]">send</span>
+                  </button>
+                </div>
+                <div class="flex justify-center mt-3">
+                  <span class="text-[10px] text-tertiary font-label-code uppercase tracking-wide">AI có thể mắc lỗi. Vui
+                    lòng kiểm tra lại thông tin với SGK.</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Feature Spotlight: AI Lens Curriculum Verifier (Modular Lab Layout) -->
+      <section class="w-full px-space-lg py-space-lg bg-surface-container-low" data-reveal>
+        <div class="max-w-7xl mx-auto flex flex-col gap-space-md">
+          <!-- Section Tag Header -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-xs">
+            <div>
+              <div class="flex items-center gap-2 font-label-mono text-label-code text-primary font-semibold uppercase">
+                <span class="w-2.5 h-2.5 bg-primary-container inline-block"></span>
+                MODULE 01 // KIỂM ĐỊNH TỰ ĐỘNG
+              </div>
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight" data-reveal>AI Lens: So sánh
+                SGK cũ
+                &amp; Chương trình GDPT 2018</h2>
+            </div>
+            <p class="font-body-sm text-body-sm text-secondary max-w-lg">
+              Kiểm tra chương trong sách bạn có khớp với bộ sách giáo khoa mới nhất không
+            </p>
+          </div>
+          <!-- Lab Scanner & Verification Matrix Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+            <!-- Left Column: Chapter Input List UI (5 cols) -->
+            <div
+              class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+              <div>
+                <div
+                  class="flex items-center justify-between pb-space-sm border-b border-surface-container-high mb-space-md">
+                  <span class="font-label-mono text-label-code text-tertiary uppercase">[INPUT_STREAM: NHẬP BÀI /
+                    CHƯƠNG]</span>
+                  <span
+                    class="px-2 py-0.5 bg-surface-container text-on-surface-variant font-label-code text-label-code rounded">AI
+                    ENGINE v4.2</span>
+                </div>
+
+                <!-- Book Title Field -->
+                <div class="mb-space-md bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-1.5">
+                  <label class="font-label-mono text-[11px] text-tertiary uppercase font-semibold">TÊN SÁCH CẦN THẨM
+                    ĐỊNH (TỪ KHÓA)</label>
+                  <input type="text" id="ai-lens-book-name" value=""
+                    class="w-full bg-surface border border-surface-container-high rounded-md p-2 text-body-sm font-medium text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                    placeholder="VD: Vật lý 10, Toán 12...">
+                </div>
+
+                <!-- Chapters List Header -->
+                <div class="flex items-center justify-between mb-space-xs">
+                  <label class="font-label-mono text-[11px] text-tertiary uppercase font-semibold">DANH SÁCH TIÊU ĐỀ BÀI
+                    / CHƯƠNG</label>
+                  <span class="text-[11px] text-secondary font-mono" id="chapter-count-badge">0 tiêu đề</span>
+                </div>
+
+                <!-- Dynamic Chapter Boxes Container -->
+                <div id="ai-lens-chapters-container" class="flex flex-col gap-2.5 max-h-[340px] overflow-y-auto pr-1">
+                  <!-- Empty placeholder or single empty box -->
+                  <div
+                    class="chapter-box group relative flex items-center gap-2 bg-surface-container-low p-2 rounded-lg border border-surface-container-high focus-within:border-primary-container transition-all">
+                    <span
+                      class="chapter-idx flex items-center justify-center w-6 h-6 rounded bg-surface-container-highest text-secondary font-mono text-[11px] font-bold">1</span>
+                    <input type="text"
+                      class="chapter-title-input flex-1 bg-transparent border-none text-body-sm text-on-surface outline-none placeholder:text-gray-400 font-medium"
+                      placeholder="Nhập tiêu đề bài / chương..." value="">
+                    <button type="button"
+                      class="remove-chapter-btn opacity-60 hover:opacity-100 text-tertiary hover:text-error transition-opacity p-1 rounded">
+                      <span class="material-symbols-outlined text-[18px]">close</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Add New Chapter Button -->
+                <button type="button" id="add-chapter-btn"
+                  class="mt-3 w-full py-2 px-3 border border-dashed border-primary-container/60 hover:border-primary-container hover:bg-primary-container/5 text-primary-container rounded-lg font-headline-sm text-body-sm font-semibold flex items-center justify-center gap-1.5 transition-all">
+                  <span class="material-symbols-outlined text-[18px]">add_circle</span>
+                  <span>Thêm ô tiêu đề bài học mới</span>
+                </button>
+              </div>
+              <div class="mt-space-lg pt-space-sm border-t border-surface-container-high flex flex-col gap-2">
+                <button id="submit-ai-lens"
+                  class="w-full py-2.5 bg-primary-container text-on-primary font-headline-sm text-body-sm rounded hover:bg-surface-tint shadow-[2px_2px_0px_#1a1c1d] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                  <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                  <span>KHỞI CHẠY ĐỐI SÁNH AI</span>
+                </button>
+              </div>
+            </div>
+            <!-- Right Column: Verification Results & Comparative Table (7 cols) -->
+            <div
+              class="lg:col-span-7 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-center items-center text-center min-h-[400px]"
+              id="ai-lens-results">
+              <span
+                class="material-symbols-outlined text-[48px] text-surface-container-highest mb-4">document_scanner</span>
+              <p class="text-tertiary font-body-sm font-medium">Nhập thông tin mục lục bên trái và bấm Khởi chạy để xem
+                kết quả đối sánh</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Digital Textbooks Catalog Grid (E-Book & Workbook Library) -->
+      <section class="w-full px-space-lg py-space-xl bg-surface" data-reveal>
+        <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+          <!-- Section Header with Meta Counters -->
+          <div
+            class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm border-b border-surface-container-high pb-space-sm">
+            <div>
+              <div class="flex items-center gap-2 font-label-mono text-label-code text-tertiary uppercase">
+                <span class="">[03] DANH MỤC XÁC THỰC</span>
+                <span class="">•</span>
+                <span class="text-primary font-bold">KHO HỌC LIỆU SỐ BẢN QUYỀN</span>
+              </div>
+              <h2 class="font-headline-lg text-headline-lg text-on-surface" data-reveal>SGK &amp; Sách Bài Tập Điện Tử
+              </h2>
+            </div>
+          </div>
+          <!-- Book Grid (4 Columns Desktop, 2 Tablet, 1 Mobile) -->
+          <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+            <!-- Books will be loaded here dynamically -->
+          </div>
+          <!-- Pagination and Registry Verification Footnote -->
+          <div
+            class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-sm border-t border-surface-container-high mt-4">
+            <span id="pagination-info" class="font-label-code text-label-code text-tertiary">
+              ĐANG TẢI...
+            </span>
+            <div id="pagination-controls" class="flex items-center gap-1">
+              <!-- Pagination buttons will be loaded here dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Sylvi AI Chatbot Widget -->
+      <div id="sylvi-chatbot" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+        <!-- Chat Window -->
+        <div id="sylvi-window"
+          class="hidden w-[380px] bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200 mb-4 flex-col overflow-hidden transition-all duration-300 transform origin-bottom-right font-sans">
+
+          <!-- Header -->
+          <div class="p-4 pb-2 flex items-start justify-between">
+            <div class="flex items-start gap-3">
+              <div class="relative">
+                <div
+                  class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-white shadow-sm overflow-hidden">
+                  <!-- Robot Icon Placeholder -->
+                  <div
+                    class="w-8 h-8 bg-gradient-to-br from-amber-400 to-[#FF5C00] rounded-md flex items-center justify-center shadow-inner">
+                    <div class="flex gap-1">
+                      <div class="w-1.5 h-1.5 bg-white rounded-sm"></div>
+                      <div class="w-1.5 h-1.5 bg-white rounded-sm"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[#FF5C00] border-2 border-white rounded-full">
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-gray-900 text-base" data-reveal>Sylvi AI</h3>
+                  <span
+                    class="bg-[#FFE5D9] text-[#D9381E] text-[10px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">Trợ
+                    lý SGK</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-0.5">Trực tuyến giải đáp về phiên bản sách</p>
+              </div>
+            </div>
+            <button id="sylvi-close-btn" class="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Chat Messages -->
+          <div id="sylvi-messages"
+            class="flex-1 p-4 max-h-[300px] min-h-[200px] overflow-y-auto flex flex-col gap-3 text-sm">
+            <div class="self-start bg-[#F4F4F5] p-3 rounded-lg text-gray-800 shadow-sm w-full leading-relaxed">
+              "Bạn đang băn khoăn về sự khác nhau giữa <strong class="text-[#c14a22]">Vật lý 10 Cánh Diều</strong> và
+              <strong class="text-[#c14a22]">Kết nối tri thức</strong>? Hãy gửi câu hỏi cho mình nhé!"
+            </div>
+          </div>
+
+          <!-- Input Form -->
+          <form id="sylvi-form" class="px-4 pb-2">
+            <div class="flex gap-2 border border-gray-300 bg-[#F4F4F5] rounded p-1">
+              <input type="text" id="sylvi-input"
+                class="flex-1 text-sm bg-transparent border-none px-2 py-1.5 focus:outline-none focus:ring-0 text-gray-700 placeholder:text-gray-500"
+                placeholder="Hỏi Sylvi về chương, bài, bộ sách..." autocomplete="off">
+              <button type="submit"
+                class="w-9 h-9 rounded bg-[#FF5C00] text-white flex items-center justify-center hover:bg-[#e04f00] transition-colors disabled:opacity-50">
+                <svg class="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Footer -->
+          <div class="px-4 py-3 flex items-center justify-between border-t border-gray-100 mt-2">
+            <div class="flex items-center gap-1.5 text-[11px] text-gray-500 font-mono">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#FF5C00]"></span>
+              Độ trễ phản hồi ~0.4s
+            </div>
+            <button class="text-[11px] text-gray-500 font-mono hover:text-gray-800 transition-colors">
+              Mở toàn màn hình
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Micro-interactions Script -->
+
+    </div>
+  </main>
+  <footer class="bg-white border-t border-gray-200/80 px-6 sm:px-8 py-8 text-xs text-gray-500" data-reveal>
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3"><span class="font-bold text-gray-900 font-sans">BOOKBRIDGE PROTOCOL ©
+          2025</span><span class="text-gray-300">•</span><span class="">Chương trình hỗ trợ học sinh thiếu sách giáo
+          khoa toàn quốc</span></div>
+      <div class="flex items-center space-x-6 text-gray-600 font-medium"><a
+          class="hover:text-[#FF5C00] transition-colors" href="home_page.html">Điều khoản phục vụ</a><a
+          class="hover:text-[#FF5C00] transition-colors" href="home_page.html">Hướng dẫn nhà trường</a><a
+          class="hover:text-[#FF5C00] transition-colors" href="home_page.html">Đóng góp kho sách</a></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+
+
+  </div>
+  </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const libraryInput = document.getElementById('sylvi-library-input');
+    const librarySubmit = document.getElementById('sylvi-library-submit');
+    const chatHistoryDiv = document.getElementById('chat-history');
+
+    let libraryChatHistory = [];
+
+    function appendLibraryMessage(role, text) {
+      const wrapper = document.createElement('div');
+      if (role === 'user') {
+        wrapper.className = 'flex gap-space-sm max-w-[90%] md:max-w-[85%] self-end flex-row-reverse';
+        wrapper.innerHTML = `
+        <div class="w-8 h-8 rounded-full bg-surface-container-high flex-shrink-0 flex items-center justify-center mt-1">
+          <span class="material-symbols-outlined text-on-surface text-[16px]">person</span>
+        </div>
+        <div class="bg-primary-container text-on-primary p-space-sm rounded-lg rounded-tr-none shadow-sm break-words">
+          <p class="text-body-sm">${text.replace(/\\n/g, '<br>')}</p>
+        </div>
+      `;
+      } else {
+        wrapper.className = 'flex gap-space-sm max-w-[95%] md:max-w-[85%]';
+        const formattedText = typeof marked !== 'undefined' ? marked.parse(text) : text.replace(/\\n/g, '<br>');
+        wrapper.innerHTML = `
+        <div class="w-8 h-8 rounded-full bg-primary flex-shrink-0 flex items-center justify-center mt-1">
+          <span class="material-symbols-outlined text-on-primary text-[16px]">smart_toy</span>
+        </div>
+        <div class="bg-surface p-space-sm rounded-lg rounded-tl-none border border-surface-container-high shadow-sm w-full break-words prose prose-sm prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800 prose-a:underline hover:prose-a:text-primary-fixed max-w-none">
+          ${formattedText}
+        </div>
+      `;
+      }
+      chatHistoryDiv.appendChild(wrapper);
+      chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+    }
+
+    if (librarySubmit && libraryInput && chatHistoryDiv) {
+      librarySubmit.addEventListener('click', async () => {
+        const text = libraryInput.value.trim();
+        if (!text) return;
+
+        appendLibraryMessage('user', text);
+        libraryInput.value = '';
+        libraryInput.style.height = '';
+        librarySubmit.disabled = true;
+        libraryInput.disabled = true;
+
+        // Show loading
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'flex gap-space-sm max-w-[95%] md:max-w-[85%]';
+        loadingDiv.innerHTML = `
+        <div class="w-8 h-8 rounded-full bg-primary flex-shrink-0 flex items-center justify-center mt-1">
+          <span class="material-symbols-outlined text-on-primary text-[16px]">smart_toy</span>
+        </div>
+        <div class="bg-surface p-space-sm rounded-lg rounded-tl-none border border-surface-container-high shadow-sm w-full text-tertiary italic text-[12px]">
+          Đang suy nghĩ...
+        </div>
+      `;
+        chatHistoryDiv.appendChild(loadingDiv);
+        chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+
+        try {
+          const response = await fetch('http://127.0.0.1:8000/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, history: libraryChatHistory })
+          });
+          const data = await response.json();
+          loadingDiv.remove();
+
+          if (data.reply) {
+            appendLibraryMessage('model', data.reply);
+            libraryChatHistory.push({ role: 'user', text: text }, { role: 'model', text: data.reply });
+          } else {
+            appendLibraryMessage('model', 'Đã có lỗi xảy ra. Vui lòng thử lại.');
+          }
+        } catch (err) {
+          loadingDiv.remove();
+          appendLibraryMessage('model', 'Không thể kết nối đến máy chủ.');
+        } finally {
+          librarySubmit.disabled = false;
+          libraryInput.disabled = false;
+          libraryInput.focus();
+        }
+      });
+    }
+  </script>
+
+  <script>
+    const sylviBtn = document.getElementById('sylvi-toggle-btn');
+    const sylviWindow = document.getElementById('sylvi-window');
+    const sylviCloseBtn = document.getElementById('sylvi-close-btn');
+    const sylviForm = document.getElementById('sylvi-form');
+    const sylviInput = document.getElementById('sylvi-input');
+    const sylviMessages = document.getElementById('sylvi-messages');
+    const sylviSubmitBtn = sylviForm ? sylviForm.querySelector('button') : null;
+
+    let popupChatHistory = [];
+
+    function toggleChat() {
+      if (sylviWindow.classList.contains('hidden')) {
+        sylviWindow.classList.remove('hidden');
+        sylviWindow.classList.add('flex');
+        setTimeout(() => sylviInput.focus(), 100);
+      } else {
+        sylviWindow.classList.add('hidden');
+        sylviWindow.classList.remove('flex');
+      }
+    }
+
+    if (sylviBtn) sylviBtn.addEventListener('click', toggleChat);
+    if (sylviCloseBtn) sylviCloseBtn.addEventListener('click', toggleChat);
+
+    function appendPopupMessage(role, text) {
+      const div = document.createElement('div');
+      if (role === 'user') {
+        div.className = 'self-end bg-gray-100 text-gray-800 p-2.5 rounded-lg rounded-tr-sm shadow-sm max-w-[85%] break-words border border-gray-200';
+      } else {
+        div.className = 'self-start bg-[#F4F4F5] p-3 rounded-lg text-gray-800 shadow-sm w-full break-words prose prose-sm prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800';
+      }
+
+      if (role === 'model') {
+        div.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text.replace(/
+          / g, '<br>');
+      } else {
+        div.textContent = text;
+      }
+
+      sylviMessages.appendChild(div);
+      sylviMessages.scrollTop = sylviMessages.scrollHeight;
+    }
+
+    if (sylviForm) sylviForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = sylviInput.value.trim();
+      if (!text) return;
+
+      appendPopupMessage('user', text);
+      sylviInput.value = '';
+      sylviSubmitBtn.disabled = true;
+      sylviInput.disabled = true;
+
+      const loadingDiv = document.createElement('div');
+      loadingDiv.className = 'self-start bg-[#F4F4F5] p-3 rounded-lg text-gray-400 shadow-sm italic text-xs w-full';
+      loadingDiv.textContent = 'Sylvi đang nghĩ...';
+      sylviMessages.appendChild(loadingDiv);
+      sylviMessages.scrollTop = sylviMessages.scrollHeight;
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, history: popupChatHistory })
+        });
+        const data = await response.json();
+        loadingDiv.remove();
+        if (data.reply) {
+          appendPopupMessage('model', data.reply);
+          popupChatHistory.push({ role: 'user', text: text }, { role: 'model', text: data.reply });
+        } else {
+          appendPopupMessage('model', 'Đã có lỗi xảy ra. Vui lòng thử lại.');
+        }
+      } catch (err) {
+        loadingDiv.remove();
+        appendPopupMessage('model', 'Không thể kết nối đến máy chủ.');
+      } finally {
+        sylviSubmitBtn.disabled = false;
+        sylviInput.disabled = false;
+        sylviInput.focus();
+      }
+    });
+  </script>
+
+  <script>
+    const toggleMainChatBtn = document.getElementById('toggle-main-chat-btn');
+    const mainChatArea = document.getElementById('main-chat-area');
+    const chatToggleIcon = document.getElementById('chat-toggle-icon');
+
+    if (toggleMainChatBtn && mainChatArea && chatToggleIcon) {
+      toggleMainChatBtn.addEventListener('click', () => {
+        if (mainChatArea.classList.contains('h-0')) {
+          mainChatArea.classList.remove('h-0');
+          mainChatArea.classList.add('h-[600px]');
+          chatToggleIcon.style.transform = 'rotate(180deg)';
+          setTimeout(() => document.getElementById('sylvi-library-input').focus(), 300);
+        } else {
+          mainChatArea.classList.remove('h-[600px]');
+          mainChatArea.classList.add('h-0');
+          chatToggleIcon.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/animation.js"></script>
+</body>
+
+
+</html>
