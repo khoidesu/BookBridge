@@ -393,7 +393,7 @@
       sylviMessages.scrollTop = sylviMessages.scrollHeight;
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/chat', {
+        const response = await fetch('https://bookbridge-api-m2qs.onrender.com/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, history: chatHistory })
@@ -476,7 +476,7 @@
       sylviMessages.scrollTop = sylviMessages.scrollHeight;
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/chat', {
+        const response = await fetch('https://bookbridge-api-m2qs.onrender.com/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, history: chatHistory })
@@ -494,7 +494,7 @@
         }
       } catch (err) {
         loadingDiv.remove();
-        appendMessage('model', 'Không thể kết nối đến máy chủ. Hãy đảm bảo API đang chạy ở http://127.0.0.1:8000');
+        appendMessage('model', 'Không thể kết nối đến máy chủ. Hãy đảm bảo API đang chạy ở https://bookbridge-api-m2qs.onrender.com');
         console.error(err);
       } finally {
         sylviSubmitBtn.disabled = false;

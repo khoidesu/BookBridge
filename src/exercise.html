@@ -355,7 +355,7 @@
 
 <!-- SCRIPTS -->
 <script>
-  const API_BASE = 'http://127.0.0.1:8000';
+  const API_BASE = 'https://bookbridge-api-m2qs.onrender.com';
   const userRole = localStorage.getItem('bb_role');
   const userToken = localStorage.getItem('bb_token');
   const userName = localStorage.getItem('bb_username');
@@ -750,7 +750,7 @@
     if (token) {
       // Get title from the loaded exercise context or header
       const exTitle = document.getElementById('exercise-title')?.textContent || 'Bài kiểm tra trắc nghiệm';
-      fetch('http://127.0.0.1:8000/user/exercises/submit', {
+      fetch('https://bookbridge-api-m2qs.onrender.com/user/exercises/submit', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -1216,7 +1216,7 @@
     sylviMessages.scrollTop = sylviMessages.scrollHeight;
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/chat', {
+      const response = await fetch('https://bookbridge-api-m2qs.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history: chatHistory })

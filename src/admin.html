@@ -101,7 +101,7 @@
     }
 
     async function loadUsers() {
-      const res = await fetch('http://127.0.0.1:8000/admin/users', { headers });
+      const res = await fetch('https://bookbridge-api-m2qs.onrender.com/admin/users', { headers });
       const users = await res.json();
       const tbody = document.getElementById('users-table-body');
       tbody.innerHTML = '';
@@ -132,18 +132,18 @@
 
     async function approveUser(username) {
       if(!confirm(`Duyệt tài khoản giáo viên: ${username}?`)) return;
-      await fetch(`http://127.0.0.1:8000/admin/users/${username}/approve`, { method: 'PUT', headers });
+      await fetch(`https://bookbridge-api-m2qs.onrender.com/admin/users/${username}/approve`, { method: 'PUT', headers });
       loadUsers();
     }
 
     async function deleteUser(username) {
       if(!confirm(`Xoá tài khoản: ${username}? Không thể hoàn tác!`)) return;
-      await fetch(`http://127.0.0.1:8000/admin/users/${username}`, { method: 'DELETE', headers });
+      await fetch(`https://bookbridge-api-m2qs.onrender.com/admin/users/${username}`, { method: 'DELETE', headers });
       loadUsers();
     }
 
     async function loadData() {
-      const res = await fetch('http://127.0.0.1:8000/admin/pairing_data', { headers });
+      const res = await fetch('https://bookbridge-api-m2qs.onrender.com/admin/pairing_data', { headers });
       const data = await res.json();
       const list = document.getElementById('data-list');
       list.innerHTML = '';
@@ -172,7 +172,7 @@
       const type = document.getElementById('data-type').value;
       const value = document.getElementById('data-value').value;
       if(!value) return;
-      await fetch('http://127.0.0.1:8000/admin/pairing_data', {
+      await fetch('https://bookbridge-api-m2qs.onrender.com/admin/pairing_data', {
         method: 'POST',
         headers,
         body: JSON.stringify({ type, value })
@@ -183,12 +183,12 @@
 
     async function deleteData(id) {
       if(!confirm("Xoá dữ liệu này?")) return;
-      await fetch(`http://127.0.0.1:8000/admin/pairing_data/${id}`, { method: 'DELETE', headers });
+      await fetch(`https://bookbridge-api-m2qs.onrender.com/admin/pairing_data/${id}`, { method: 'DELETE', headers });
       loadData();
     }
 
     async function loadExercises() {
-      const res = await fetch('http://127.0.0.1:8000/admin/exercises', { headers });
+      const res = await fetch('https://bookbridge-api-m2qs.onrender.com/admin/exercises', { headers });
       const data = await res.json();
       const list = document.getElementById('exercises-list');
       list.innerHTML = '';
@@ -215,7 +215,7 @@
 
     async function deleteExercise(id) {
       if(!confirm("Xoá bài tập này khỏi hệ thống?")) return;
-      await fetch(`http://127.0.0.1:8000/admin/exercises/${id}`, { method: 'DELETE', headers });
+      await fetch(`https://bookbridge-api-m2qs.onrender.com/admin/exercises/${id}`, { method: 'DELETE', headers });
       loadExercises();
     }
 
