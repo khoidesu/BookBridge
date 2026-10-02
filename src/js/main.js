@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       async function fetchAndRenderBooks() {
         try {
-          const res = await fetch('https://bookbridge-api-m2qs.onrender.com/books');
+          const res = await fetch('https://bookbridge-api-m0qs.onrender.com/books');
           allBooks = await res.json();
           renderPage(1);
         } catch (error) {
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Gọi API backend phân tích semantic AI thực tế
-                const response = await fetch('https://bookbridge-api-m2qs.onrender.com/compare_titles', {
+                const response = await fetch('https://bookbridge-api-m0qs.onrender.com/compare_titles', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.getElementById('mark-read-btn').addEventListener('click', async () => {
-            await fetch('https://bookbridge-api-m2qs.onrender.com/notifications/read', {
+            await fetch('https://bookbridge-api-m0qs.onrender.com/notifications/read', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('bb_token')}` }
             });
@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         async function loadNotifications() {
             try {
-                const res = await fetch('https://bookbridge-api-m2qs.onrender.com/notifications', {
+                const res = await fetch('https://bookbridge-api-m0qs.onrender.com/notifications', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('bb_token')}` }
                 });
                 const notis = await res.json();
@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Load options
         async function loadOptions() {
             try {
-                const res = await fetch('https://bookbridge-api-m2qs.onrender.com/pairing_options');
+                const res = await fetch('https://bookbridge-api-m0qs.onrender.com/pairing_options');
                 const data = await res.json();
                 
                 if(data.school && data.school.length) {
@@ -640,7 +640,7 @@ document.addEventListener('DOMContentLoaded', () => {
         async function loadProfileAndRadar() {
             if(!localStorage.getItem('bb_token')) return;
             try {
-                const res = await fetch('https://bookbridge-api-m2qs.onrender.com/user/profile', {
+                const res = await fetch('https://bookbridge-api-m0qs.onrender.com/user/profile', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('bb_token')}` }
                 });
                 if(res.ok) {
@@ -682,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mode = shiftSelect.value;
             applyFilterBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> ĐANG LƯU...';
             try {
-                await fetch('https://bookbridge-api-m2qs.onrender.com/user/profile', {
+                await fetch('https://bookbridge-api-m0qs.onrender.com/user/profile', {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('bb_token')}`,
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitReqBtn.disabled = true;
 
             try {
-                const res = await fetch('https://bookbridge-api-m2qs.onrender.com/pairing_requests', {
+                const res = await fetch('https://bookbridge-api-m0qs.onrender.com/pairing_requests', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('bb_token')}`,
@@ -757,7 +757,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 5. Load and Pair
         async function loadPairingRequests() {
             try {
-                const res = await fetch('https://bookbridge-api-m2qs.onrender.com/pairing_requests');
+                const res = await fetch('https://bookbridge-api-m0qs.onrender.com/pairing_requests');
                 const reqs = await res.json();
                 const currentUser = localStorage.getItem('bb_username');
 
@@ -833,7 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(!localStorage.getItem('bb_token')) return alert("Vui lòng đăng nhập để ghép cặp!");
             if(!confirm("Bạn có chắc muốn gửi yêu cầu ghép cặp tới người này?")) return;
             try {
-                const res = await fetch('https://bookbridge-api-m2qs.onrender.com/pair_action', {
+                const res = await fetch('https://bookbridge-api-m0qs.onrender.com/pair_action', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('bb_token')}`,

@@ -481,7 +481,7 @@
         chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
 
         try {
-          const response = await fetch('https://bookbridge-api-m2qs.onrender.com/chat', {
+          const response = await fetch('https://bookbridge-api-m0qs.onrender.com/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text, history: libraryChatHistory })
@@ -568,7 +568,7 @@
       sylviMessages.scrollTop = sylviMessages.scrollHeight;
 
       try {
-        const response = await fetch('https://bookbridge-api-m2qs.onrender.com/chat', {
+        const response = await fetch('https://bookbridge-api-m0qs.onrender.com/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, history: popupChatHistory })

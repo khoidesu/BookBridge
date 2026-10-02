@@ -4,7 +4,7 @@
  * Requires: bb_token, bb_username in localStorage.
  */
 (function () {
-  const API = 'https://bookbridge-api-m2qs.onrender.com';
+  const API = 'https://bookbridge-api-m0qs.onrender.com';
   const token = localStorage.getItem('bb_token');
   const myUser = localStorage.getItem('bb_username');
   if (!token || !myUser) return;
