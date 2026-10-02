@@ -1,8 +1,6 @@
 fastapi
 uvicorn[standard]
 pandas
-sentence-transformers
-torch
 python-dotenv
 google-genai
 certifi

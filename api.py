@@ -4,9 +4,6 @@ import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
-import torch
-import torch.nn.functional as F
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -67,21 +64,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL_NAME = "keepitreal/vietnamese-sbert"
-print(f"Loading {MODEL_NAME}...")
-model = SentenceTransformer(MODEL_NAME)
-print("Model loaded.")
-
 CSV_PATH = os.path.join(os.path.dirname(__file__), "Data", "filter_content.csv")
 print(f"Loading CSV from {CSV_PATH}...")
 df = pd.read_csv(CSV_PATH)
 df = df.dropna(subset=['Nội dung'])
 
-print("Precomputing embeddings for CSV data...")
-# Format: "Chủ đề / Bài: Nội dung"
-full_sentences = [f"{row['Chủ đề / Bài']}: {row['Nội dung']}" for _, row in df.iterrows()]
-embeddings = model.encode(full_sentences, convert_to_tensor=True)
-print(f"Precomputed {len(embeddings)} embeddings.")
 
 class CompareRequest(BaseModel):
     book_name: str
@@ -92,34 +79,18 @@ def compare_titles(req: CompareRequest):
     if not req.chapter_titles:
         return {"match_percentage": 0, "matched_items": 0, "total_items": 0, "matches": []}
 
-    # --- Tuning constants ---
-    # Raw cosine similarity below this is treated as 0% (noise floor for Vietnamese SBERT)
-    SIMILARITY_THRESHOLD = 0.50
-    # Above this raw score, we trust the embedding match without keyword checks
-    CONFIDENT_THRESHOLD = 0.70
-    # Vietnamese stopwords to ignore in keyword overlap checks
-    VN_STOPWORDS = {
-        'và', 'của', 'là', 'các', 'có', 'được', 'cho', 'trong', 'với', 'một',
-        'những', 'không', 'này', 'từ', 'theo', 'đã', 'cũng', 'về', 'hay',
-        'khi', 'đến', 'như', 'để', 'bài', 'chủ', 'đề', 'nội', 'dung',
-        'chương', 'phần', 'mục', 'sgk', 'sách', 'tập', 'học', 'kiến',
-        'thức', 'hoạt', 'động', 'thực', 'hành', 'ôn', 'luyện', 'tổng',
-        'hợp', 'giới', 'thiệu', 'chung', 'i', 'ii', 'iii', 'iv', 'v',
-    }
+    load_dotenv('.env.local', override=True)
+    current_api_key = os.environ.get("LLM_API_KEY", "")
+    if not current_api_key:
+        return {"match_percentage": 0, "matched_items": 0, "total_items": len(req.chapter_titles), "matches": []}
 
-    # Calculate embeddings for input titles
-    input_embeddings = model.encode(req.chapter_titles, convert_to_tensor=True)
-    
-    # Cosine similarity matrix: shape (num_inputs, num_db_items)
-    similarities = F.cosine_similarity(input_embeddings.unsqueeze(1), embeddings.unsqueeze(0), dim=-1)
-    
-    # Filter by book_name keyword — STRICT: no fallback to all books
     search_kw = req.book_name.lower().strip()
+    db_items = []
     if search_kw:
-        mask = df['Sách'].str.lower().str.contains(search_kw, na=False).values
-        valid_idx = torch.tensor(mask)
-        if not valid_idx.any():
-            # No matching book in DB — return 0% for everything
+        mask = df['Sách'].str.lower().str.contains(search_kw, na=False)
+        filtered_df = df[mask]
+        
+        if filtered_df.empty:
             no_match_results = []
             for title in req.chapter_titles:
                 no_match_results.append({
@@ -134,78 +105,101 @@ def compare_titles(req: CompareRequest):
                 "total_items": len(req.chapter_titles),
                 "matches": no_match_results
             }
+        
+        for _, row in filtered_df.iterrows():
+            db_items.append(f"{row['Chủ đề / Bài']}: {row['Nội dung']} (Sách: {row['Sách']})")
     else:
-        valid_idx = torch.ones(len(df), dtype=torch.bool)
-    
-    matches = []
-    total_score = 0
-    
-    for i in range(len(req.chapter_titles)):
-        input_str = req.chapter_titles[i].lower().strip()
-        sim_scores = similarities[i].clone()
+        # Rất hiếm khi không có tên sách, nhưng nếu có thì lấy 100 bài đầu để tránh quá tải context
+        for _, row in df.head(100).iterrows():
+            db_items.append(f"{row['Chủ đề / Bài']}: {row['Nội dung']} (Sách: {row['Sách']})")
+
+    prompt = f"""
+Bạn là chuyên gia giáo dục. Nhiệm vụ của bạn là so sánh danh sách các tiêu đề bài học mà người dùng tìm thấy với danh sách bài học chuẩn trong cơ sở dữ liệu (CSDL) của cuốn sách "{req.book_name}".
+
+DANH SÁCH TÌM THẤY (Đầu vào):
+{chr(10).join([f"{i+1}. {t}" for i, t in enumerate(req.chapter_titles)])}
+
+DANH SÁCH CHUẨN (CSDL):
+{chr(10).join([f"- {item}" for item in db_items])}
+
+YÊU CẦU:
+1. Hãy đối chiếu từng tiêu đề trong "DANH SÁCH TÌM THẤY" với các bài trong "DANH SÁCH CHUẨN".
+2. Chấm điểm độ tương đồng ý nghĩa (score) từ 0 đến 100.
+3. Nếu tìm thấy bài học có ý nghĩa giống nhau hoặc tương đương, hãy đưa tiêu đề chuẩn vào trường "expected" và cho điểm cao (từ 50-100 tùy độ khớp). 100 là giống hệt nhau hoặc cùng nội dung.
+4. Nếu không có bài nào trong CSDL liên quan, hãy trả về "(Không tìm thấy bài phù hợp trong CSDL)" ở trường "expected" và cho score là 0.
+
+ĐỊNH DẠNG TRẢ VỀ CHÍNH XÁC (MẢNG JSON):
+Trình bày kết quả dưới dạng một danh sách (array) JSON duy nhất (KHÔNG bọc trong markdown ```json, KHÔNG có text giải thích).
+[
+  {{
+    "found": "Tiêu đề tìm thấy",
+    "expected": "Bài học chuẩn tương ứng từ CSDL (Sách: ...)",
+    "score": 90,
+    "book": "{req.book_name}"
+  }},
+  ...
+]
+"""
+
+    try:
+        client = genai.Client(api_key=current_api_key)
+        response = client.models.generate_content(
+            model=LLM_MODEL,
+            contents=prompt,
+        )
         
-        # Apply book filter — mask out entries from other books
-        sim_scores[~valid_idx] = -1.0
+        result_text = response.text.strip()
+        import re, json
         
-        # Lexical boost: exact substring match → 1.0 (this is always reliable)
-        has_lexical_match = False
-        for j in range(len(df)):
-            if not valid_idx[j]:
-                continue
-            expected_str = full_sentences[j].lower()
-            if input_str in expected_str:
-                sim_scores[j] = 1.0
-                has_lexical_match = True
-                
-        best_idx = torch.argmax(sim_scores).item()
-        raw_score = sim_scores[best_idx].item()
-        
-        row = df.iloc[best_idx]
-        expected_text = f"{row['Chủ đề / Bài']}: {row['Nội dung']}"
-        
-        # --- Score transformation ---
-        if has_lexical_match:
-            # Exact substring match: always 100%
-            final_score = 1.0
-        elif raw_score < SIMILARITY_THRESHOLD:
-            # Below noise floor: 0%
-            final_score = 0.0
-        else:
-            # Rescale [THRESHOLD, 1.0] → [0.0, 1.0]
-            final_score = (raw_score - SIMILARITY_THRESHOLD) / (1.0 - SIMILARITY_THRESHOLD)
+        # Parse JSON array
+        match = re.search(r'\[.*\]', result_text, re.DOTALL)
+        if match:
+            result_text = match.group(0)
             
-            # Keyword overlap validation for scores below confident threshold
-            if raw_score < CONFIDENT_THRESHOLD:
-                input_words = set(input_str.split()) - VN_STOPWORDS
-                expected_words = set(full_sentences[best_idx].lower().split()) - VN_STOPWORDS
-                overlap = input_words & expected_words
-                
-                if len(overlap) == 0:
-                    # Zero keyword overlap + mediocre embedding score = likely false positive
-                    final_score *= 0.3  # heavy penalty
-                elif len(overlap) == 1 and len(input_words) > 2:
-                    # Only 1 shared word with multi-word input = weak signal
-                    final_score *= 0.6
+        parsed_matches = json.loads(result_text)
         
-        score_percent = round(final_score * 100)
-        score_percent = max(0, min(100, score_percent))
+        matches = []
+        total_score = 0
+        for m in parsed_matches:
+            # Fallback for missing keys
+            found = m.get("found", "")
+            expected = m.get("expected", "(Không tìm thấy bài phù hợp trong CSDL)")
+            score = m.get("score", 0)
+            book = m.get("book", req.book_name)
+            
+            # Ensure score is int and bounded 0-100
+            if isinstance(score, str):
+                try:
+                    score = int(score)
+                except ValueError:
+                    score = 0
+            score = max(0, min(100, score))
+            
+            matches.append({
+                "found": found,
+                "expected": expected,
+                "score": score,
+                "book": book
+            })
+            total_score += score
+            
+        avg_score = round(total_score / len(matches)) if matches else 0
         
-        matches.append({
-            "found": req.chapter_titles[i],
-            "expected": expected_text,
-            "score": score_percent,
-            "book": str(row['Sách'])
-        })
-        total_score += score_percent
+        return {
+            "match_percentage": avg_score,
+            "matched_items": sum(1 for m in matches if m['score'] >= 50),
+            "total_items": len(req.chapter_titles),
+            "matches": matches
+        }
         
-    avg_score = round(total_score / len(req.chapter_titles)) if req.chapter_titles else 0
-    
-    return {
-        "match_percentage": avg_score,
-        "matched_items": sum(1 for m in matches if m['score'] >= 50),
-        "total_items": len(req.chapter_titles),
-        "matches": matches
-    }
+    except Exception as e:
+        print(f"Compare error: {e}")
+        return {
+            "match_percentage": 0,
+            "matched_items": 0,
+            "total_items": len(req.chapter_titles),
+            "matches": []
+        }
 
 class ChatMessage(BaseModel):
     role: str
