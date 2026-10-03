@@ -22,6 +22,20 @@ BookBridge là một nền tảng học liệu mở và thông minh, giúp kết
 
 ## 🪙 Live demo ở đây: [Bookbridge](https://bookbridge-liart.vercel.app/index.html)
 
+test account:
+
+- student:
+```
+account: student1
+password: student123
+```
+
+- teacher:
+```
+account: teacher1
+password: teacher123
+```
+
 ## ⚡️ Tổng quan (Overview)
 
 Khi cả nước chuyển sang dùng một bộ sách giáo khoa thống nhất, nguồn cung ở một số địa phương và trường học có thể chưa theo kịp nhu cầu. Học sinh thiếu tài liệu trong những tuần đầu năm học, còn phụ huynh phải tìm cách xoay xở, trong đó có cách sao chụp sách, một việc có thể vi phạm quyền tác giả.
