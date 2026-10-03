@@ -186,7 +186,7 @@ graph TD
 ### Bước 1: Clone kho lưu trữ
 
 ```bash
-git clone <url-repo-github-cua-ban>
+git clone https://github.com/khoidesu/BookBridge.git
 cd BookBridge
 ```
 
