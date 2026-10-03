@@ -205,7 +205,7 @@ source venv/bin/activate
 venv\Scripts\activate
 
 # Cài đặt các thư viện cần thiết
-pip install fastapi uvicorn pandas sentence-transformers torch python-dotenv google-genai certifi pymongo bcrypt pyjwt
+pip install requirements.txt
 ```
 
 ### Bước 3: Cấu hình biến môi trường
