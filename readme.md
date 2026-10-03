@@ -30,7 +30,7 @@ Trong khi đó, nhiều gia đình đang có sẵn sách của các bộ khác (
 
 **SGK Cầu Nối** biến nguồn sách sẵn có đó thành giải pháp hợp pháp, gần như không tốn chi phí:
 
-1. **Nhận diện** cuốn sách học sinh đang có (chụp bìa/mục lục hoặc chọn tay).
+1. **Nhận diện** danh sách các mục lục, tên bài học.
 2. **Đối chiếu** với bộ sách thống nhất bằng _bảng tương ứng bài học_: "Bài này của sách thống nhất ứng với chương nào, trang nào trong sách của bạn", kèm **mức phủ nội dung**.
 3. **Kết nối** các bạn thừa sách và thiếu sách trong cùng trường, cùng lớp, cùng phường để cho mượn.
 4. **Hỗ trợ tự học** bằng bài tập gốc theo từng bài, cùng đường dẫn tới SGK điện tử chính thức.
@@ -39,7 +39,7 @@ Trong khi đó, nhiều gia đình đang có sẵn sách của các bộ khác (
 
 | Tính năng                     | Mô tả                                                                                          |
 | ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| 🔍 **Nhận diện sách**         | Chụp bìa hoặc mục lục. Ảnh được nhận diện chữ ngay trên điện thoại, không gửi đi và không lưu. |
+| 🔍 **Nhận diện sách**         | Liệt kê những mục lục trong cuốn sách cũ của bạn để so sánh với kho sách mới nhất của nhà xuất bản. |
 | 🔗 **Bảng tương ứng bài học** | Chỉ ra bài nào của sách thống nhất nằm ở đâu trong sách bạn đang có.                           |
 | 🤝 **Ghép sách cho mượn**     | Ghép theo trường, lớp, phường/xã. Không dùng GPS. Trao đổi tại trường.                         |
 | ✏️ **Hướng dẫn tự học**       | Bài tập gốc theo yêu cầu cần đạt của Chương trình 2018.                                        |
@@ -70,7 +70,7 @@ Dài hạn, chúng tôi hướng tới:
 
 ## 📓 Phạm vi hiện tại và giới hạn
 
-- Bản hiện tại là **bản demo**, tập trung vào **một môn, một lớp** và một số bộ sách để chứng minh giải pháp.
+- Bản hiện tại là **bản demo**, tập trung vào **Khối 12** và một số bộ sách để chứng minh giải pháp.
 - **Bảng tương ứng do nhóm đối chiếu, chưa được nhà xuất bản hay Bộ GD&ĐT xác nhận**, nên có thể sót hoặc lệch. Mức phủ cao không có nghĩa nội dung và độ sâu giống hệt nhau.
 - Bài tập do AI tạo, nên được giáo viên kiểm tra trước khi dùng.
 - Dự án **không phải tư vấn pháp lý**. Các nội dung liên quan đến bản quyền cần được đối chiếu với quy định hiện hành.
@@ -113,7 +113,7 @@ graph TD
     subgraph Backend FastAPI
         API[API Endpoints]
         Auth[Xác thực JWT/Bcrypt]
-        Vector[Vector Search SBERT]
+        Vector[Gemini AI]
     end
 
     subgraph External
@@ -149,8 +149,7 @@ graph TD
 
 - **Core**: Python 3, FastAPI, Uvicorn
 - **AI & NLP**:
-  - Google GenAI SDK (Sử dụng model `gemini-2.5-flash`) để khởi tạo nội dung và làm trợ lý ảo.
-  - `sentence-transformers` (`keepitreal/vietnamese-sbert`) kết hợp `torch` để so khớp từ vựng, tính toán độ tương đồng nội dung.
+  - Google GenAI SDK (Sử dụng model `gemini-2.5-flash`) để khởi tạo nội dung và làm trợ lý ảo và để so khớp từ vựng, tính toán độ tương đồng nội dung.
 - **Data Processing**: Pandas (xử lý dữ liệu đầu vào từ CSV).
 - **Auth**: PyJWT, bcrypt để mã hóa và xác thực người dùng an toàn.
 
